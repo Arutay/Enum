@@ -1,36 +1,87 @@
 import Transport.*;
+import Transport.exception.DiagnosticFailedException;
 import com.sun.jdi.connect.Transport;
 import jdk.jfr.Category;
 
 public class Main {
     public static void main(String[] args) {
 
-        Car kia = new Car("Kia", "Stinger", 3.3, TypeOfBody.SEDAN);
-        Car hyundai = new Car("Hyundai", "Genesis G90", 5.0, TypeOfBody.SEDAN);
+        DriverB driverB = new DriverB(
+                "Водитель категории В",
+                true,
+                1
+        );
+
+        Car car = new Car(
+                "Бренд 1",
+                "Модель 1",
+                1.6,
+                DriverB,
+                TypeOfBody.SEDAN
+
+        );
 
 
-        Truck kamazTruck1 = new Truck("Камаз", "5490", 12,Weight.N1);
-        Truck kamazTruck2 = new Truck("Камаз", "6520", 10, Weight.N2);
+        Car car2 = new Car(
+                "Бренд 2",
+                "Модель 2",
+                1.6,
+                TypeOfBody.SEDAN,
+                null
+        );
 
-        Bus kamazBus1 = new Bus("Камаз", "12312", 7, Capacity.MEDIUM);
-        Bus kamazBus2 = new Bus("Камаз", 1231, 6, Capacity.LARGE);
+        DriverD driverD = new DriverD(
+                "Водитель категории D",
+                true,
+                1
+        );
+
+        Bus bus = new Bus(
+                "Бренд 1",
+                "Модель 2",
+                1.6,
+                Capacity.LARGE,
+                driverD
+        );
+
+        DriverC driverC = new DriverC(
+                "Водитель категории С",
+                true,
+                1
+
+        );
+
+        Truck truck = new Truck(
+                "Бренд 1",
+                "Модель 1",
+                1.6,
+                Weight.N1,
+                driverC
+        );
 
 
-        Driver driverB = new DriverB("Иванов Иван Иванович", true, 11);
-        Driver driverC = new DriverC("Петров Петр Петрович", true, 12);
-        Driver driverD = new DriverD("Семенов Семен Семенович", true, 10);
+        try {
+            System.out.println( car.diagnostics());
+        } catch (DiagnosticFailedException e) {
+            e.printStackTrace();
+        }
 
+        try {
+            System.out.println( car2.diagnostics());
+        } catch (DiagnosticFailedException e) {
+            e.printStackTrace();
+        }
 
 
     }
 
-    private static void printInfo(Driver <?> driver, transport Transport) {
-        System.out.println(
-                "Водитель " +driver.getName()+
-                        " управляет автомобилем " + Transport.getBrand() + " " + Transport.getModel() + " " +
-                        " и будет учавствовать в заезде"
-        );
+    private static void printInfo(transport<?> Transport) {
 
-        Transport.printType();
+        Transport.maxSpeed();
+        Transport.pitStop();
+        Transport.theBestCircleTime();
+
+
+        System.out.println("Водтель " + Transport.getDriver().getName());
     }
 }

@@ -1,5 +1,7 @@
 package Transport;
 
+import Transport.exception.DiagnosticFailedException;
+
 public class Truck extends transport<DriverC> {
 
 
@@ -61,5 +63,14 @@ public class Truck extends transport<DriverC> {
         int maxBound = 130;
         int maxSpeed = (int) (minBound + (maxBound - minBound) * Math.random());
         System.out.println("Максимальная скорость для грузовика: " + maxSpeed);
+    }
+
+    @Override
+    public boolean diagnostics() throws DiagnosticFailedException {
+        if (getDriver() != null && getDriver().isHasDriverLicense) {
+            return true;
+        } else {
+            throw new DiagnosticFailedException();
+        }
     }
 }
