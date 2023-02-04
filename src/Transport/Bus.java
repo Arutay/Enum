@@ -1,5 +1,7 @@
 package Transport;
 
+import Transport.exception.DiagnosticFailedException;
+
 public class Bus extends transport<DriverD> {
 
     private Capacity capacity;
@@ -26,6 +28,11 @@ public class Bus extends transport<DriverD> {
     @Override
     public void finishMove() {
         System.out.println("Автобус марки " + getBrand() + " закончил движение ");
+    }
+
+    @Override
+    public boolean diagnostics() throws DiagnosticFailedException {
+        return false;
     }
 
     @Override
