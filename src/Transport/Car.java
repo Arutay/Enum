@@ -1,15 +1,19 @@
 package Transport;
 
+import Transport.exception.DiagnosticFailedException;
+
 public class Car extends transport<DriverB> {
 
 
     private TypeOfBody typeOfBody;
 
 
-    public Car(String brand, String model, double engineVolume, TypeOfBody typeOfBody) {
-        super(brand, model, engineVolume);
+    public Car(String brand, String model, double engineVolume, TypeOfBody typeOfBody,DriverB driver) {
+        super(brand, model, engineVolume,driver);
         this.typeOfBody = typeOfBody;
     }
+
+
 
     public TypeOfBody getTypeOfBody() {
         return typeOfBody;
@@ -27,6 +31,15 @@ public class Car extends transport<DriverB> {
     @Override
     public void finishMove() {
         System.out.println("Автомобиль марки " + getBrand() + " закончил движение ");
+    }
+
+    @Override
+    public boolean diagnostics() throws DiagnosticFailedException {
+        if (getDriver() != null && getDriver().isHasDriverLicense) {
+            return true;
+        } else {
+            throw new DiagnosticFailedException();
+        }
     }
 
     @Override
