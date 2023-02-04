@@ -1,10 +1,13 @@
 package Transport;
 
+import Transport.exception.DiagnosticFailedException;
+
 public abstract class transport{
 
     private final String brand;
     private final String model;
     private double engineVolume;
+    private final T driver;
 
 
 
@@ -21,6 +24,11 @@ public abstract class transport{
 
         setEngineVolume(engineVolume);
     }
+
+    public T getDriver() {
+        return driver;
+    }
+
 
 
     public String getBrand() {
@@ -47,6 +55,8 @@ public abstract class transport{
 
     public abstract void  startMove();
     public abstract void  finishMove();
+
+    public abstract boolean diagnostics() throws DiagnosticFailedException;
 
 
 
